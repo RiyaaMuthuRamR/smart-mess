@@ -1,0 +1,908 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Mess Management System</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="loginScreen" class="login-screen">
+    <div class="login-box">
+        <div class="login-logo">SM</div>
+        <div class="login-title">Smart Mess</div>
+        <div class="login-subtitle">
+            Smart Mess Management System
+        </div>
+
+        <div id="loginError" class="login-error"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Username</label>
+                <input id="loginUsername" type="text" value="warden" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input id="loginPassword" type="password" value="Warden@123" required>
+            </div>
+
+            <button class="btn btn-primary" style="width:100%;padding:11px">
+                Sign In
+            </button>
+        </form>
+    </div>
+</div>
+
+
+<!-- APPLICATION -->
+
+<div id="app" class="app" style="display:none">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-title">Smart Mess</div>
+            <div class="brand-subtitle">Management System</div>
+        </div>
+
+        <nav class="nav">
+
+            <button class="nav-btn active" data-page="dashboard">
+                Dashboard
+            </button>
+
+            <button class="nav-btn" data-page="students">
+                Students
+            </button>
+
+            <button class="nav-btn" data-page="attendance">
+                Attendance
+            </button>
+
+            <button class="nav-btn" data-page="menu">
+                Menu
+            </button>
+
+            <button class="nav-btn" data-page="consumption">
+                Consumption
+            </button>
+
+            <button class="nav-btn" data-page="waste">
+                Waste Record
+            </button>
+
+            <button class="nav-btn" data-page="analytics">
+                Analytics
+            </button>
+
+            <button class="nav-btn" data-page="reports">
+                Reports
+            </button>
+
+            <button class="nav-btn" data-page="profile">
+                Profile
+            </button>
+
+        </nav>
+
+        <button id="logoutBtn" class="logout-btn">
+            Logout
+        </button>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+            <div id="pageTitle" class="page-title">
+                Dashboard
+            </div>
+
+            <div class="top-user">
+                <span id="topUsername">Warden</span>
+                <div id="topAvatar" class="avatar">W</div>
+            </div>
+        </header>
+
+
+        <div class="content">
+
+            <!-- DASHBOARD -->
+
+            <section id="page-dashboard" class="page active">
+
+                <div class="welcome">
+                    <h2>Mess Overview</h2>
+                    <p id="dashboardDate">Loading today's information...</p>
+                </div>
+
+                <div id="dashboardStats" class="grid grid-4">
+                    <div class="card stat-card">
+                        <div class="stat-label">Total Students</div>
+                        <div id="statStudents" class="stat-value">—</div>
+                        <div class="stat-small">Registered students</div>
+                    </div>
+
+                    <div class="card stat-card">
+                        <div class="stat-label">Today's Waste</div>
+                        <div id="statWaste" class="stat-value">—</div>
+                        <div class="stat-small">Kg / Count, based on recorded items</div>
+                    </div>
+
+                    <div class="card stat-card">
+                        <div class="stat-label">Prepared Today</div>
+                        <div id="statPrepared" class="stat-value">—</div>
+                        <div class="stat-small">Kg / Count, based on recorded items</div>
+                    </div>
+
+                    <div class="card stat-card">
+                        <div class="stat-label">Waste Percentage</div>
+                        <div id="statWastePercent" class="stat-value">—</div>
+                        <div class="stat-small">Prepared vs waste</div>
+                    </div>
+                </div>
+
+
+                <div class="menu-section">
+
+                    <div class="section-header">
+                        <div>
+                            <h3 class="section-title">Today's Menu</h3>
+                            <div class="section-description">
+                                Meals and planned menu items for today
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="dashboardMenu" class="meal-grid">
+                        <div class="loading">Loading menu...</div>
+                    </div>
+
+                </div>
+
+
+                <div class="menu-section">
+
+                    <div class="section-header">
+                        <div>
+                            <h3 class="section-title">Meal Attendance</h3>
+                            <div class="section-description">
+                                Attendance status for today's meals
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="dashboardAttendance" class="meal-grid">
+                        <div class="loading">Loading attendance...</div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ATTENDANCE -->
+
+            <section id="page-attendance" class="page">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Meal Attendance</h2>
+                        <div class="section-description">
+                            Record meal attendance for registered students.
+                        </div>
+
+                        <div
+                            id="attendanceDateDisplay"
+                            class="section-description"
+                            style="margin-top:6px;font-weight:600"
+                        >
+                            Attendance Date: Loading...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+
+                            <label>Meal</label>
+
+                            <select id="attendanceMeal">
+
+                                <option value="breakfast">
+                                    Breakfast
+                                </option>
+
+                                <option value="lunch">
+                                    Lunch
+                                </option>
+
+                                <option value="dinner">
+                                    Dinner
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Student ID / QR Identifier</label>
+
+                            <input
+                                id="attendanceStudentId"
+                                type="text"
+                                placeholder="Enter Student ID or QR identifier"
+                            >
+
+                        </div>
+
+                        <button
+                            id="markAttendanceBtn"
+                            class="btn btn-primary"
+                        >
+                            ✓ Mark Attendance
+                        </button>
+
+                        <div
+                            id="attendanceResult"
+                            style="margin-top:15px"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+                <div class="card" style="margin-top:15px">
+
+                    <div class="card" style="margin-top:15px">
+
+                        <div class="card-header">
+
+                            <div class="card-title">
+                                Demo / Simulate Attendance
+                            </div>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="section-description" style="margin-bottom:15px">
+                                Mark attendance for existing registered students for demonstration.
+                                This does not create new student records.
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Number of Existing Students</label>
+
+                                <input
+                                    id="simulateAttendanceCount"
+                                    type="number"
+                                    min="1"
+                                    max="212"
+                                    value="10"
+                                    placeholder="Enter number of students"
+                                >
+
+                            </div>
+
+                            <button
+                                id="simulateAttendanceBtn"
+                                class="btn btn-secondary"
+                            >
+                                ▶ Simulate Attendance
+                            </button>
+
+                            <div
+                                id="simulateAttendanceResult"
+                                style="margin-top:15px"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+                            Today's Attendance
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="todayAttendanceList"
+                        class="table-wrap"
+                    >
+                        <div class="loading">
+                            Loading today's attendance...
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- STUDENTS -->
+
+            <section id="page-students" class="page">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Students</h2>
+                        <div class="section-description">
+                            Search and view registered student profiles and meal history
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom:15px">
+
+                    <div class="card-body">
+
+                        <div class="filter-row" style="grid-template-columns:1fr auto">
+
+                            <div>
+                                <label>Search Students</label>
+                                <input
+                                    id="studentSearch"
+                                    type="text"
+                                    placeholder="Search by name, student ID or roll number..."
+                                >
+                            </div>
+
+                            <div class="filter-actions">
+                                <button
+                                    id="studentSearchBtn"
+                                    class="btn btn-primary"
+                                >
+                                    Search
+                                </button>
+
+                                <button
+                                    id="studentClearBtn"
+                                    class="btn btn-secondary"
+                                >
+                                    Clear
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <div class="card-title">
+                            Registered Students
+                            <span id="studentCount" style="color:var(--muted);font-weight:400"></span>
+                        </div>
+                    </div>
+
+                    <div id="studentsTable" class="table-wrap">
+                        <div class="loading">Loading students...</div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STUDENT PROFILE -->
+
+            <section id="page-student-profile" class="page">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 class="section-title">Student Profile</h2>
+                        <div class="section-description">
+                            Student details and complete meal attendance history
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="showPage('students')"
+                    >
+                        Back to Students
+                    </button>
+
+                </div>
+
+                <div id="studentProfileContent">
+                    <div class="loading">Loading student...</div>
+                </div>
+
+            </section>
+
+
+            <!-- MENU -->
+
+            <section id="page-menu" class="page">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Menu Management</h2>
+                        <div class="section-description">
+                            Create today's breakfast, lunch and dinner menu
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label>Menu Date</label>
+                            <input id="menuDate" type="date">
+                        </div>
+
+                        <div id="menuEditors"></div>
+
+                        <button
+                            id="saveMenuBtn"
+                            class="btn btn-primary"
+                        >
+                            Save Menu
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- CONSUMPTION -->
+
+            <section id="page-consumption" class="page">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Consumption</h2>
+                        <div class="section-description">
+                            Record prepared and served quantities. Waste is calculated automatically.
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="filter-row">
+
+                            <div>
+                                <label>Date</label>
+                                <input id="consumptionDate" type="date">
+                            </div>
+
+                            <div>
+                                <label>Meal</label>
+                                <select id="consumptionMeal">
+                                    <option value="breakfast">Breakfast</option>
+                                    <option value="lunch">Lunch</option>
+                                    <option value="dinner">Dinner</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>Menu Item</label>
+                                <select id="consumptionItem">
+                                    <option value="">Select item</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="preparedKg">Prepared (kg)</label>
+                                <input
+                                    id="preparedKg"
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    placeholder="0.00"
+                                >
+                            </div>
+
+                        </div>
+
+                        <div style="margin-top:10px;max-width:260px">
+
+                            <div class="form-group">
+                                <label for="servedKg">Served (kg)</label>
+                                <input
+                                    id="servedKg"
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    placeholder="0.00"
+                                >
+                            </div>
+
+                        </div>
+
+                        <button
+                            id="saveConsumptionBtn"
+                            class="btn btn-primary"
+                        >
+                            Save Consumption
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card" style="margin-top:15px">
+
+                    <div class="card-header">
+                        <div class="card-title">
+                            Consumption Records
+                        </div>
+                    </div>
+
+                    <div id="consumptionTable" class="table-wrap">
+                        <div class="loading">
+                            Loading consumption records...
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- WASTE -->
+
+            <section id="page-waste" class="page">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 class="section-title">Waste Record</h2>
+                        <div class="section-description">
+                            View waste records. Date and meal filters are optional.
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- TODAY'S WASTE -->
+
+                <div class="grid grid-4" style="margin-bottom:15px">
+
+                    <div class="card stat-card">
+                        <div class="stat-label">Today's Prepared</div>
+                        <div id="wastePreparedToday" class="stat-value">—</div>
+                        <div class="stat-small">Kg / Count, based on recorded items</div>
+                    </div>
+
+                    <div class="card stat-card">
+                        <div class="stat-label">Today's Served</div>
+                        <div id="wasteServedToday" class="stat-value">—</div>
+                        <div class="stat-small">Kg / Count, based on recorded items</div>
+                    </div>
+
+                    <div class="card stat-card">
+                        <div class="stat-label">Today's Waste</div>
+                        <div id="wasteToday" class="stat-value">—</div>
+                        <div class="stat-small">Kg / Count, based on recorded items</div>
+                    </div>
+
+                    <div class="card stat-card">
+                        <div class="stat-label">Today's Waste %</div>
+                        <div id="wastePercentToday" class="stat-value">—</div>
+                        <div class="stat-small">Calculated separately for Kg and Count</div>
+                    </div>
+
+                </div>
+
+
+                <!-- OPTIONAL FILTER -->
+
+                <div class="card" style="margin-bottom:15px">
+
+                    <div class="card-body">
+
+                        <div class="filter-row">
+
+                            <div>
+                                <label>From Date <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+                                <input id="wasteFromDate" type="date">
+                            </div>
+
+                            <div>
+                                <label>To Date <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+                                <input id="wasteToDate" type="date">
+                            </div>
+
+                            <div>
+                                <label>Meal <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+                                <select id="wasteMeal">
+                                    <option value="">All Meals</option>
+                                    <option value="breakfast">Breakfast</option>
+                                    <option value="lunch">Lunch</option>
+                                    <option value="dinner">Dinner</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-actions">
+
+                                <button
+                                    id="wasteFilterBtn"
+                                    class="btn btn-primary"
+                                >
+                                    Apply Filter
+                                </button>
+
+                                <button
+                                    id="wasteClearBtn"
+                                    class="btn btn-secondary"
+                                >
+                                    Clear
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <div class="card-title">
+                            Waste Records
+                        </div>
+                    </div>
+
+                    <div id="wasteTable" class="table-wrap">
+                        <div class="loading">
+                            Loading waste records...
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ANALYTICS -->
+
+            <!-- ANALYTICS -->
+
+<div id="page-analytics" class="page">
+
+    <div class="page-title">
+        <h1>Analytics</h1>
+    </div>
+
+    <div id="analyticsAlert" class="alert"></div>
+
+
+    <div class="card">
+
+        <div class="analytics-section-header">
+            <div>
+                <h2>Today's Analytics</h2>
+                <p>Food prepared, served and wasted today.</p>
+            </div>
+        </div>
+
+        <div class="stat-grid">
+
+            <div class="stat-card analytics-kpi">
+                <h3>Today's Prepared</h3>
+                <div class="number" id="analyticsPrepared">0 kg</div>
+                <span class="kpi-description">Food prepared today</span>
+            </div>
+
+            <div class="stat-card analytics-kpi">
+                <h3>Today's Served</h3>
+                <div class="number" id="analyticsServed">0 kg</div>
+                <span class="kpi-description">Food served today</span>
+            </div>
+
+            <div class="stat-card analytics-kpi">
+                <h3>Today's Waste</h3>
+                <div class="number" id="analyticsWaste">0 kg</div>
+                <span class="kpi-description">Food wasted today</span>
+            </div>
+
+            <div class="stat-card analytics-kpi">
+                <h3>Today's Waste %</h3>
+                <div class="number" id="analyticsPercentage">0%</div>
+                <span class="kpi-description">Today's waste percentage</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- WEEKLY TREND -->
+
+    <div class="card">
+
+        <div class="analytics-section-header">
+            <div>
+                <h2>Weekly Trend</h2>
+                <p>Food waste recorded during the last 7 days.</p>
+            </div>
+        </div>
+
+        <div
+            id="weeklyTrendChart"
+            class="daily-trend-chart"
+        >
+            <div class="empty">
+                Loading weekly trend...
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- MONTHLY TREND -->
+
+    <div class="card">
+
+        <div class="analytics-section-header">
+            <div>
+                <h2>Monthly Trend</h2>
+                <p>Monthly food waste over the selected period.</p>
+            </div>
+
+            <div>
+                <select id="analyticsMonthRange"
+                        onchange="loadAnalytics()"
+                        class="form-control">
+                    <option value="60">Last 60 Days</option>
+                    <option value="90">Last 90 Days</option>
+                    <option value="365">Last 12 Months</option>
+                </select>
+            </div>
+        </div>
+
+        <div
+            id="monthlyTrendChart"
+            class="daily-trend-chart"
+        >
+            <div class="empty">
+                Loading monthly trend...
+            </div>
+        </div>
+
+    </div>
+
+</div>
+            <section id="page-reports" class="page">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 class="section-title">Reports</h2>
+                        <div class="section-description">
+                            Generate reports using actual database records
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="filter-row">
+
+                            <div>
+                                <label>From Date</label>
+                                <input id="reportFrom" type="date">
+                            </div>
+
+                            <div>
+                                <label>To Date</label>
+                                <input id="reportTo" type="date">
+                            </div>
+
+                                                    <div>
+                            <button
+                                id="generateReportBtn"
+                                class="btn btn-primary"
+                            >
+                                Generate Report
+                            </button>
+
+                            <button
+                                id="downloadReportBtn"
+                                class="btn btn-secondary"
+                                style="margin-left:8px"
+                            >
+                                📥 Download Report
+                            </button>
+                        </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div id="reportResult" style="margin-top:15px"></div>
+
+            </section>
+
+
+            <!-- PROFILE -->
+
+            <section id="page-profile" class="page">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 class="section-title">Profile</h2>
+                        <div class="section-description">
+                            Current staff account
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div id="profileContent" class="card">
+
+                    <div class="loading">
+                        Loading profile...
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script src="script.js"></script>
+
+
+</body>
+</html>
+```
